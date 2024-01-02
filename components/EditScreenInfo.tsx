@@ -7,7 +7,7 @@ import { MonoText } from './StyledText';
 import { Text, View } from './Themed';
 
 
-export default function EditScreenInfo({ path }: { path: string }) {
+export default function EditScreenInfo({ path }: { path: string }): React.JSX.Element {
   return (
     <View>
       <View style={styles.getStartedContainer}>
@@ -38,7 +38,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
           style={styles.helpLink}
           href="https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet">
           <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-            Tap here if your app doesn't automatically update after making changes
+            Tap here if your app doesn&apos;t automatically update after making changes
           </Text>
         </ExternalLink>
       </View>
