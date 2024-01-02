@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: An AWS Serverless Specification template describing your function.
+Resources:
+  ocrinferenceendpoint:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.11
+      Architectures:
+        - x86_64
+      EventInvokeConfig:
+        MaximumEventAgeInSeconds: 21600
+        MaximumRetryAttempts: 2
+      EphemeralStorage:
+        Size: 512
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: /ocr
+            Method: POST
+      Environment:
+        Variables:
+          ENDPOINT_NAME: sagemaker-ocr-inference-endpoint-2023-10-09-1141
+      RuntimeManagementConfig:
+        UpdateRuntimeOn: Auto
+      SnapStart:
+        ApplyOn: None
+      PackageType: Zip
+      Policies:
+        Statement:
+          - Sid: VisualEditor0
+            Effect: Allow
+            Action:
+              - sagemaker:InvokeEndpoint
+            Resource: '*'
+          - Effect: Allow
+            Action:
+              - logs:CreateLogGroup
+            Resource: arn:aws:logs:AWS_REGION:AWS_ACCOUNT_ID:*
+          - Effect: Allow
+            Action:
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource:
+              - >-
+                arn:aws:logs:AWS_REGION:AWS_ACCOUNT_ID:log-group:/aws/lambda/ocr-inference-endpoint:*
